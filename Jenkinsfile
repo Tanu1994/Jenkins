@@ -30,6 +30,9 @@ pipeline {
         }
 
         stage('hello again') {
+            when {
+                expression { didTimeout == false }
+            }
             agent any
             steps {
                 milestone(ordinal: 1, label: "BUILD_START_MILESTONE")
