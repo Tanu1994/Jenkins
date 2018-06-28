@@ -15,12 +15,12 @@ pipeline {
         stage('approval') {
              agent none
              steps {
+                milestone(ordinal: 1, label: "BOB")
                 script {
                     try {
                         timeout(time: 20, unit: 'DAYS') {
                             input 'Deploy to stage.'
                         }
-                        milestone(ordinal: 1, label: "BOB")
                     }
                     catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException e) {
                         didTimeout = true
