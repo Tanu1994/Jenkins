@@ -1,4 +1,5 @@
 def didTimeout = false
+def userInput = true
 pipeline {
 
     agent none
@@ -18,14 +19,20 @@ pipeline {
              steps {
                 script {
                 try {
-                    throw 0
-                    timeout(time: 1, unit: 'MINUTES') {
-                        input 'Deploy to stage.'
+                    timeout(time: 15, unit: 'SECONDS') { // change to a convenient timeout for you
+                        userInput = input(
+                        id: 'Proceed1', message: 'Was this successful?', parameters: [
+                        [$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']
+                        ])
                     }
-                }
-                catch (err) {
+                } catch(err) { // timeout reached or input false
                     def user = err.getCauses()[0].getUser()
+                    if('SYSTEM' == user.toString()) { // SYSTEM means timeout.
                         didTimeout = true
+                    } else {
+                        userInput = false
+                        echo "Aborted by: [${user}]"
+                    }
                 }}
              }
         }
