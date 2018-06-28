@@ -46,7 +46,7 @@ pipeline {
                 stage('hello again again') {
                     agent any
                     steps {
-                        milestone(ordinal: 1, label: "BUILD_START_MILESTONE")
+                        milestone(ordinal: 2, label: "BUILD_START_MILESTONE")
                         sh 'echo Hello'
                     }
                  }
