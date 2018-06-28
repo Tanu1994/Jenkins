@@ -12,15 +12,9 @@ pipeline {
 
         }
 
-        stage("Can I Deploy?") {
-
-        }
-
-           input {
+        input {
                 message "Should we continue?"
                 ok "Yes, we should."
-           }
-
         }
 
         stage('hello again') {
