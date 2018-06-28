@@ -49,10 +49,11 @@ pipeline {
           }
         }
         failure {
+        step {
         if (didTimeout) {
             script {
                         currentBuild.result = 'SUCCESS'
                       }
-        }}
+        }}}
     }
 }
