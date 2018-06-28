@@ -48,11 +48,11 @@ pipeline {
             currentBuild.result = 'SUCCESS'
           }
         }
-
+        failure {
         if (didTimeout) {
             script {
                         currentBuild.result = 'SUCCESS'
                       }
-        }
+        }}
     }
 }
