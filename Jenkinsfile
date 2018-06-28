@@ -17,14 +17,14 @@ pipeline {
              steps {
                 script {
                 try {
-                    timeout(time: 2, unit: 'MINUTES') {
+                    timeout(time: 1, unit: 'MINUTES') {
                     input 'Deploy to stage.'
                     }
                 }
                 catch (err) {
                     def user = err.getCauses()[0].getUser()
-                        if('SYSTEM' == user.toString()) { //timeout
-                            currentBuild.result = "SUCCESS"
+                    if('SYSTEM' == user.toString()) { //timeout
+                        currentBuild.result = 'SUCCESS'
                     }
                 }}
              }
