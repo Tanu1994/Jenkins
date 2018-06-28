@@ -18,6 +18,7 @@ pipeline {
              steps {
                 script {
                 try {
+                    throw 0
                     timeout(time: 1, unit: 'MINUTES') {
                         input 'Deploy to stage.'
                     }
