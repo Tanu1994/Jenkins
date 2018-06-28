@@ -12,9 +12,11 @@ pipeline {
 
         }
 
-        input {
+        stage("Should I?") {
+            input {
                 message "Should we continue?"
                 ok "Yes, we should."
+            }
         }
 
         stage('hello again') {
