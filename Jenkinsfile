@@ -12,8 +12,8 @@ pipeline {
 
         }
 
-        try {
         stage('approval') {
+        try {
              agent none
              steps {
                  timeout(time: 2, unit: 'MINUTES') {
@@ -21,12 +21,12 @@ pipeline {
                  }
              }
          }
-         }
          catch (err) {
             def user = err.getCauses()[0].getUser()
                 if('SYSTEM' == user.toString()) { //timeout
                     currentBuild.result = "SUCCESS"
             }
+         }
          }
 
         stage('hello again') {
