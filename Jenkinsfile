@@ -29,30 +29,29 @@ pipeline {
              }
         }
 
-
-        stage('hello again') {
+        stage('nested stage') {
             when {
                 expression { didTimeout == false }
             }
-            agent any
-            steps {
-                milestone(ordinal: 1, label: "BUILD_START_MILESTONE")
-                sh 'echo Hello'
-            }
+            stages {
+                stage('hello again') {
+                    agent any
+                    steps {
+                        milestone(ordinal: 1, label: "BUILD_START_MILESTONE")
+                        sh 'echo Hello'
+                    }
 
+                }
+
+                stage('hello again again') {
+                    agent any
+                    steps {
+                        milestone(ordinal: 1, label: "BUILD_START_MILESTONE")
+                        sh 'echo Hello'
+                    }
+                 }
+            }
         }
-
-        stage('hello again again') {
-            when {
-                expression { didTimeout == false }
-            }
-            agent any
-            steps {
-                milestone(ordinal: 1, label: "BUILD_START_MILESTONE")
-                sh 'echo Hello'
-            }
-
-         }
 
     }
 
