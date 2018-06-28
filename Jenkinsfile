@@ -21,10 +21,9 @@ pipeline {
                     input 'Deploy to stage.'
                     }
                 }
-                catch (err) {
-                    def user = err.getCauses()[0].getUser()
-                        currentBuild.result = 'SUCCESS'
-                        sh 'echo I am here'
+                finally {
+                    currentBuild.result = 'SUCCESS'
+                    sh 'echo I am here'
                 }}
              }
          }
