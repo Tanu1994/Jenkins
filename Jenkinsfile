@@ -19,17 +19,15 @@ pipeline {
                 script {
                 try {
                     timeout(time: 1, unit: 'MINUTES') {
-                    input 'Deploy to stage.'
+                        input 'Deploy to stage.'
                     }
                 }
                 catch (err) {
                     def user = err.getCauses()[0].getUser()
-                    if('SYSTEM' == user.toString()) { //timeout
                         didTimeout = true
-                    }
                 }}
              }
-         }
+        }
 
         stage('hello again') {
             agent any
@@ -44,15 +42,16 @@ pipeline {
 
     post {
         aborted {
-          script {
-            currentBuild.result = 'SUCCESS'
-          }
+            script {
+                currentBuild.result = 'SUCCESS'
+            }
         }
         always {
-        script {
+            script {
                 if (didTimeout) {
-                        currentBuild.result = 'SUCCESS'
-                      }
-        }}
+                     currentBuild.result = 'SUCCESS'
+                }
+            }
+        }
     }
 }
