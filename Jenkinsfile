@@ -1,32 +1,58 @@
-def userInput = true
 def didTimeout = false
-try {
-    timeout(time: 15, unit: 'SECONDS') { // change to a convenient timeout for you
-        userInput = input(
-        id: 'Proceed1', message: 'Was this successful?', parameters: [
-        [$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']
-        ])
-    }
-} catch(err) { // timeout reached or input false
-    def user = err.getCauses()[0].getUser()
-    if('SYSTEM' == user.toString()) { // SYSTEM means timeout.
-        didTimeout = true
-    } else {
-        userInput = false
-        echo "Aborted by: [${user}]"
-    }
-}
+pipeline {
 
-node {
-    if (didTimeout) {
-        // do something on timeout
-        echo "no input was received before timeout"
-    } else if (userInput == true) {
-        // do something
-        echo "this was successful"
-    } else {
-        // do something else
-        echo "this was not successful"
-        currentBuild.result = 'FAILURE'
+    agent none
+
+    stages {
+
+        stage('hello') {
+            agent any
+            steps {
+                sh 'echo Hello'
+            }
+
+        }
+
+        stage('approval') {
+             agent none
+             steps {
+                script {
+                try {
+                    timeout(time: 1, unit: 'MINUTES') {
+                        input 'Deploy to stage.'
+                    }
+                }
+                catch (err) {
+                    def user = err.getCauses()[0].getUser()
+                    if('SYSTEM' == user.toString()) { //timeout
+                        didTimeout = true
+                }}
+             }
+        }
+
+        stage('hello again') {
+            agent any
+            steps {
+                milestone(ordinal: 1, label: "BUILD_START_MILESTONE")
+                sh 'echo Hello'
+            }
+
+        }
+
+    }
+
+    post {
+        aborted {
+            script {
+                currentBuild.result = 'SUCCESS'
+            }
+        }
+        always {
+            script {
+                if (didTimeout) {
+                     currentBuild.result = 'SUCCESS'
+                }
+            }
+        }
     }
 }
