@@ -20,6 +20,7 @@ pipeline {
                         timeout(time: 20, unit: 'SECONDS') {
                             input 'Deploy to stage.'
                         }
+                        milestone(ordinal: 1, label: "BOB")
                     }
                     catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException e) {
                         didTimeout = true
@@ -37,7 +38,7 @@ pipeline {
                 stage('hello again') {
                     agent any
                     steps {
-                        milestone(ordinal: 1, label: "BUILD_START_MILESTONE")
+                        milestone(ordinal: 2, label: "BUILD_START_MILESTONE")
                         sh 'echo Hello'
                     }
 
@@ -46,7 +47,7 @@ pipeline {
                 stage('hello again again') {
                     agent any
                     steps {
-                        milestone(ordinal: 2, label: "BUILD_START_MILESTONE")
+                        milestone(ordinal: 3, label: "BUILD_START_MILESTONE")
                         sh 'echo Hello'
                     }
                  }
