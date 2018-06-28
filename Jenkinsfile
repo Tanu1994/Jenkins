@@ -25,7 +25,6 @@ pipeline {
                     catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException e) {
                         didTimeout = true
                         print e
-                        print "BIB"
                     }
                 }
              }
