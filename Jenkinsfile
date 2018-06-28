@@ -33,7 +33,7 @@ pipeline {
 
         stage('nested stage') {
             when {
-                expression { didTimeout == false }
+                expression { !didTimeout }
             }
             stages {
                 stage('hello again') {
