@@ -22,6 +22,7 @@ pipeline {
                     }
                 }
                 finally {
+                    agent any
                     currentBuild.result = 'SUCCESS'
                     sh 'echo I am here'
                 }}
