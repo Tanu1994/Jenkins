@@ -40,4 +40,12 @@ pipeline {
         }
 
     }
+
+    post {
+        aborted {
+          script {
+            currentBuild.result = 'SUCCESS'
+          }
+        }
+    }
 }
