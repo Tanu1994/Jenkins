@@ -1,5 +1,6 @@
 pipeline {
 
+    def didTimeout = false
     agent none
 
     stages {
@@ -21,10 +22,11 @@ pipeline {
                     input 'Deploy to stage.'
                     }
                 }
-                finally {
-                    agent any
-                    currentBuild.result = 'SUCCESS'
-                    sh 'echo I am here'
+                catch (err) {
+                    def user = err.getCauses()[0].getUser()
+                    if('SYSTEM' == user.toString()) { //timeout
+                        didTimeout = true
+                    }
                 }}
              }
          }
@@ -45,6 +47,13 @@ pipeline {
           script {
             currentBuild.result = 'SUCCESS'
           }
+        }
+    }
+
+    node {
+        if (didTimeout) {
+            currentBuild.result = 'SUCCESS'
+            echo "Timeout"
         }
     }
 }
