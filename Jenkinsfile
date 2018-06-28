@@ -48,12 +48,11 @@ pipeline {
             currentBuild.result = 'SUCCESS'
           }
         }
-    }
 
-    node {
         if (didTimeout) {
-            currentBuild.result = 'SUCCESS'
-            echo "Timeout"
+            script {
+                        currentBuild.result = 'SUCCESS'
+                      }
         }
     }
 }
