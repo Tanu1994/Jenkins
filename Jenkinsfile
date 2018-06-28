@@ -12,15 +12,6 @@ pipeline {
 
         }
 
-        stage("Should I?") {
-            steps {
-                input 'Approval step'{
-                    message "Should we continue?"
-                    ok "Yes, we should."
-                }
-            }
-        }
-
         stage('hello again') {
             agent any
             steps {
