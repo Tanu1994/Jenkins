@@ -21,7 +21,7 @@ pipeline {
                             input 'Deploy to stage.'
                         }
                     }
-                    catch ('org.jenkinsci.plugins.workflow.steps.FlowInterruptedException') {
+                    catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException) {
                         didTimeout = true
                     }
                 }
