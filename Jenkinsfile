@@ -21,12 +21,8 @@ pipeline {
                             input 'Deploy to stage.'
                         }
                     }
-                    catch (err) {
-                        print err
-                        def user = err.getCauses()[0].getUser()
-                        if('SYSTEM' == user.toString()) { //timeout
-                            didTimeout = true
-                        }
+                    catch ('org.jenkinsci.plugins.workflow.steps.FlowInterruptedException') {
+                        didTimeout = true
                     }
                 }
              }
