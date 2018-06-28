@@ -17,11 +17,12 @@ pipeline {
              steps {
                 script {
                     try {
-                        timeout(time: 1, unit: 'MINUTES') {
+                        timeout(time: 20, unit: 'SECONDS') {
                             input 'Deploy to stage.'
                         }
                     }
                     catch (err) {
+                        print err
                         def user = err.getCauses()[0].getUser()
                         if('SYSTEM' == user.toString()) { //timeout
                             didTimeout = true
