@@ -2,7 +2,6 @@ def didTimeout = false
 pipeline {
 
     agent none
-
     stages {
 
         stage('hello') {
@@ -17,16 +16,18 @@ pipeline {
              agent none
              steps {
                 script {
-                try {
-                    timeout(time: 1, unit: 'MINUTES') {
-                        input 'Deploy to stage.'
+                    try {
+                        timeout(time: 1, unit: 'MINUTES') {
+                            input 'Deploy to stage.'
+                        }
+                    }
+                    catch (err) {
+                        def user = err.getCauses()[0].getUser()
+                        if('SYSTEM' == user.toString()) { //timeout
+                            didTimeout = true
+                        }
                     }
                 }
-                catch (err) {
-                    def user = err.getCauses()[0].getUser()
-                    if('SYSTEM' == user.toString()) { //timeout
-                        didTimeout = true
-                }}
              }
         }
 
