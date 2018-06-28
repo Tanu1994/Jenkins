@@ -1,6 +1,6 @@
 pipeline {
 
-    def didTimeout = false
+    didTimeout = false
     agent none
 
     stages {
