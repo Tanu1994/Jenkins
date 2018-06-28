@@ -29,10 +29,11 @@ pipeline {
              }
         }
 
+        when {
+            expression { didTimeout == false }
+        }
+
         stage('hello again') {
-            when {
-                expression { didTimeout == false }
-            }
             agent any
             steps {
                 milestone(ordinal: 1, label: "BUILD_START_MILESTONE")
@@ -40,6 +41,15 @@ pipeline {
             }
 
         }
+
+        stage('hello again again') {
+                    agent any
+                    steps {
+                        milestone(ordinal: 1, label: "BUILD_START_MILESTONE")
+                        sh 'echo Hello'
+                    }
+
+                }
 
     }
 
