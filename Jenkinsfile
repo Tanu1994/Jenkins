@@ -14,8 +14,8 @@ pipeline {
 
         stage('approval') {
              agent none
-             steps {
-                 try {
+             try {
+                steps {
                     timeout(time: 2, unit: 'MINUTES') {
                     input 'Deploy to stage.'
                     }
