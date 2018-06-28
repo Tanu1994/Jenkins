@@ -15,17 +15,18 @@ pipeline {
         stage('approval') {
              agent none
              steps {
+                script {
                 try {
                     timeout(time: 2, unit: 'MINUTES') {
                     input 'Deploy to stage.'
                     }
                 }
-                finally {
+                catch (err) {
                     def user = err.getCauses()[0].getUser()
                         if('SYSTEM' == user.toString()) { //timeout
                             currentBuild.result = "SUCCESS"
                     }
-                 }
+                }}
              }
          }
 
