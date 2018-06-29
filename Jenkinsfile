@@ -24,7 +24,7 @@ pipeline {
              agent any
              steps {
                 milestone(ordinal: 2, label: "BUILD_START_MILESTONE")
-                sh 'echo Hello'
+                sh 'echo Hello hello'
              }
         }
 
