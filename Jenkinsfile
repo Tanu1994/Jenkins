@@ -16,16 +16,7 @@ pipeline {
              agent none
              steps {
                 milestone(ordinal: 1, label: "BOB")
-                script {
-                    try {
-                            input 'Deploy to stage.'
-                        }
-                    }
-                    catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException e) {
-                        didTimeout = true
-                        print e
-                    }
-                }
+                input 'Deploy to stage.'
              }
         }
 
