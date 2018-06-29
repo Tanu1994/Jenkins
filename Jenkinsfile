@@ -18,6 +18,7 @@ pipeline {
                 milestone(ordinal: 1, label: "BOB")
                 script {
                     try {
+                        timeout(time: 2, unit: 'MINUTES') {
                             input 'Deploy to stage.'
                         }
                     }
