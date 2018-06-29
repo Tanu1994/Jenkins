@@ -4,11 +4,9 @@ pipeline {
     stages {
         stage('hello') {
             agent any
-            steps {
                 lock('hello') {
                     sh 'echo Hello'
                 }
-            }
         }
 
         stage('approval') {
