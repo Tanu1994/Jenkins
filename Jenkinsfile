@@ -14,7 +14,7 @@ pipeline {
         stage('approval') {
              agent none
              steps {
-             lock {
+             lock('approval') {
                 milestone(ordinal: 1, label: "BOB")
                 input 'Deploy to stage.'
              }}
