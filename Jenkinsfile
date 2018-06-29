@@ -4,11 +4,12 @@ pipeline {
     stages {
         stage('hello') {
             agent any
-            lock('hello') {
             steps {
-                sh 'echo Hello'
+                lock('hello') {
+                    sh 'echo Hello'
+                }
             }
-        }}
+        }
 
         stage('approval') {
              agent none
