@@ -4,14 +4,11 @@ pipeline {
     stages {
         stage('hello') {
             agent any
+            lock('hello') {
             steps {
                 sh 'echo Hello'
-                lock('hello') {
-                  echo 'Do something here that requires unique access to the resource'
-                  // any other build will wait until the one locking the resource leaves this block
-                }
             }
-        }
+        }}
 
         stage('approval') {
              agent none
