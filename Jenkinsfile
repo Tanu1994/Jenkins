@@ -7,7 +7,6 @@ pipeline {
             steps {
                 sh 'echo Hello'
             }
-
         }
 
         stage('approval') {
@@ -26,13 +25,12 @@ pipeline {
              }
         }
 
-            stage('hello again again') {
-                agent any
-                steps {
-                    milestone(ordinal: 3, label: "BUILD_START_MILESTONE")
-                    sh 'echo Hello'
-                }
-             }
+        stage('hello again again') {
+            agent any
+            steps {
+                milestone(ordinal: 3, label: "BUILD_START_MILESTONE")
+                sh 'echo Hello'
+            }
         }
     }
 }
